@@ -1,5 +1,11 @@
 <?php
+session_start();
 include "connect.php";
+
+if (!isset($_SESSION['user_email'])) {
+    header("Location: login.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +48,7 @@ include "connect.php";
         </div>
         
     </div>
-                <a href="#" class="btn btn-primary float-start" style="margin-left:90%; margin-top:-30px">Logout</a>
+                <a href="logout.php" class="btn btn-primary float-start" style="margin-left:90%; margin-top:-30px">Logout</a>
     
 </nav>
 

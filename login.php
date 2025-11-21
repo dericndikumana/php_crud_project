@@ -1,3 +1,7 @@
+<?php
+session_start();
+include "connect.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,15 +23,16 @@
              <!-- Right column with login  -->
             <div class="col-md-6 d-flex flex-column justify-content-center align-items-center px-5">
                 <div class="card shadow-sm p-4 mb-4" style="width: 100%; max-width: 400px;">
+                    
                     <form action="" method="post">
                         <div class="mb-3">
-                            <input type="text" class="form-control form-control-lg" placeholder="Email">
+                            <input type="text" name="email" class="form-control form-control-lg" placeholder="Email">
                         </div>
                         <div class="mb-3">
-                            <input type="password" class="form-control form-control-lg" placeholder="Password">
+                            <input type="password" name="password" class="form-control form-control-lg" placeholder="Password">
                         </div>
                         <div class="d-grid mb-3">
-                            <button type="submit" class="btn btn-primary btn-lg fw-bold">Log In</button>
+                            <button type="submit" name="login" class="btn btn-primary btn-lg fw-bold">Log In</button>
                         </div>
                         <div class="text-center mb-3">
                             <a href="#" class="text-decoration-none">Forgot password?</a>
@@ -39,6 +44,30 @@
                             </a>
                         </div>
                     </form>
+
+                    <!-- starting of login  -->
+                     <?php
+                     if(isset($_POST['login'])){
+                        $email = $_POST['email'];
+                        $password = $_POST['password'];
+
+                        $query = mysqli_query($connect,"SELECT*FROM students WHERE email='$email' ");
+                        if(mysqli_num_rows($query) == 1){
+                            $user = mysqli_fetch_assoc($query);
+
+                            if(password_verify($password,$user['password'])){
+                            $_SESSION['user_email'] = $email;
+                            header("Location: dashboard.php");
+                            exit;
+                        }else{
+                            echo "<script>alert('Incorrect password');</script>";
+                        }
+                    }else{
+                        echo "<script>alert('Email not found');</script>";
+                    }
+                 }
+                     ?>
+                    <!-- Ending of login  -->
                 </div>
                 <div class="text-center mt-4">
                     <p class="mb-0"><a href="" class="text-decoration-none fw-bold">Create a Page</a> for a celebrity, brand or business.</p>
