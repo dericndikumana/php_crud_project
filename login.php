@@ -56,7 +56,10 @@ include "connect.php";
                             $user = mysqli_fetch_assoc($query);
 
                             if(password_verify($password,$user['password'])){
-                            $_SESSION['user_email'] = $email;
+                             $_SESSION['user_email'] = $user['email'];
+                             $_SESSION['user_id'] = $user['id'];
+                             $_SESSION['firstname'] = $user['firstname'];
+                             $_SESSION['lastname'] = $user['lastname'];
                             header("Location: dashboard.php");
                             exit;
                         }else{

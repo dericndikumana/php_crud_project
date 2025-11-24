@@ -62,8 +62,10 @@ if (!isset($_SESSION['user_email'])) {
 
             <ul class="list-group list-group-flush">
                 <li class="list-group-item border-0">
-                    <i class="fas fa-user-circle me-2"></i> Ndikumana Deric
+                    <i class="fas fa-user-circle me-2"></i>
+                    <?php echo $_SESSION['firstname'] . " " . $_SESSION['lastname']; ?>
                 </li>
+
                 <li class="list-group-item border-0">
                     <i class="fas">📊</i> dashboard
                 </li>
@@ -72,13 +74,16 @@ if (!isset($_SESSION['user_email'])) {
 
             <hr>
 
-            <p class="text-muted ms-3">Your Shortcuts</p>
-
-            <ul class="list-group list-group-flush">
+            <p class="text-muted ms-3">Settings</p>
                 <li class="list-group-item border-0">
-                    <i class="fas fa-billiards me-2"></i> 8 Ball Pool
+                    <i class="fas">📊</i> Update
                 </li>
-            </ul>
+
+                <li class="list-group-item border-0">
+                    <i class="fas">📊</i> Delete
+                </li>
+
+           
         </div>
 
         <!-- displaying my student list  -->
@@ -92,7 +97,14 @@ if (!isset($_SESSION['user_email'])) {
                 <div class="conatiner mt-5">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered">
-                           
+                          <?php
+                            // Show message if exists
+                            if (isset($_SESSION['message'])) {
+                                echo "<div class='alert alert-success text-center'>" . $_SESSION['message'] . "</div>";
+                                unset($_SESSION['message']);
+                            } 
+                            ?>
+
                             <tr>
                                 <th>No</th>
                                 <th>First Names</th>
@@ -116,9 +128,10 @@ if (!isset($_SESSION['user_email'])) {
                                     echo "<td>".$rows['gender']."</td>";
                                     echo "<td>
                                             <a href='update.php?id=".$rows['id']."' class='btn btn-success btn-sm'>Update</a>
-                                            <a href='delet.php?id=".$rows['id']."' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this student?\");'>Delete</a>
+                                            <a href='delete.php?id=".$rows['id']."' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this student?\");'>Delete</a>
                                         </td>";
                                     echo "</tr>";
+                                    $count++;
                                 }
                             }
                             ?>
@@ -126,11 +139,6 @@ if (!isset($_SESSION['user_email'])) {
                     </div>
                 </div>
                 <!-- ending of displaying table  -->
-
-
-                <div class="alert alert-info">
-                    This area is 100% yours — add tables, forms, charts, anything.
-                </div>
 
             </div>
         </div>
